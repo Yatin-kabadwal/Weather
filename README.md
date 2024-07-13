@@ -58,5 +58,5 @@ For any inquiries or support, please contact:
 
 - **Yatin Kabadwal**
 - **Email**: yatinkabdwal@gmail.com
-- **LinkedIn**: [Yatin Kabadwal](https://www.linkedin.com/in/yourprofile)
-![image](https://github.com/user-attachments/assets/1a7b9d16-2368-417f-ba2e-c1066e61194b)
+- **LinkedIn**:([https://www.linkedin.com/in/yourprofile])
+
