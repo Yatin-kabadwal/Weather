@@ -1,7 +1,7 @@
 
 ## Overview
 
-The Weather Application provides real-time weather updates for locations worldwide. Built using Kotlin and Android Studio, it features a user-friendly interface with visually appealing design elements. The app leverages the MVVM architecture to ensure a clean, maintainable, and scalable codebase.
+The Weather Application provides real-time weather updates for locations worldwide. Built using Kotlin and Android Studio, it features a user-friendly interface with visually appealing design elements. The app ensure a clean, maintainable, and scalable codebase.
 
 ## Features
 
