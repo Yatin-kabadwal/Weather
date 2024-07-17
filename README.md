@@ -14,9 +14,9 @@ The Weather Application provides real-time weather updates for locations worldwi
 
 ## Screenshots
 
-![W4a](https://github.com/user-attachments/assets/70ba8ecd-7405-4153-834e-f45b0a308bfd)
-![Wha3f](https://github.com/user-attachments/assets/c5ac4853-fa57-4371-90ff-bc4863b8d8f6)
-![W8a](https://github.com/user-attachments/assets/df03e670-5286-4784-8503-ea94e1e274e7)
+<img src="https://github.com/user-attachments/assets/70ba8ecd-7405-4153-834e-f45b0a308bfd" alt="Image 1" width="200"/>
+<img src= "https://github.com/user-attachments/assets/c5ac4853-fa57-4371-90ff-bc4863b8d8f6" alt ="Image 2" width = "200"/>
+<img src = "https://github.com/user-attachments/assets/df03e670-5286-4784-8503-ea94e1e274e7" alt ="Image 3" width = "200"/>
 
 
 
