@@ -42,7 +42,6 @@ The Weather Application provides real-time weather updates for locations worldwi
 
 - **Kotlin**: For building the application.
 - **Android Studio**: Integrated development environment.
-- **MVVM Architecture**: For a clean and maintainable codebase.
 - **Retrofit**: For network requests.
 - **Glide**: For image loading.
 - **LiveData and ViewModel**: For UI-related data handling.
