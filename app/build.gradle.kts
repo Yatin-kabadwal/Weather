@@ -52,4 +52,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.lottie)
     implementation (libs.sdp.android)
+
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
+
 }
