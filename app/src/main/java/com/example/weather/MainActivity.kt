@@ -1,14 +1,17 @@
 package com.example.weather
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.weather.databinding.ActivityMainBinding
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,22 +24,40 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        // ✅ Make navigation and status bar transparent
+        window.navigationBarColor = Color.TRANSPARENT
+        window.statusBarColor = Color.TRANSPARENT
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+
+
         }
 
         setContentView(binding.root)
 
+        swipeRefreshLayout = binding.swipeRefreshLayout
+
         fetchWeatherData("Haldwani")
         setupSearch()
+
+        swipeRefreshLayout.setOnRefreshListener {
+            val city = binding.cityName.text.toString().trim()
+            fetchWeatherData(city.ifEmpty { "Haldwani" })
+        }
     }
 
     private fun setupSearch() {
@@ -45,6 +66,12 @@ class MainActivity : AppCompatActivity() {
                 if (!query.isNullOrBlank()) {
                     fetchWeatherData(query.trim())
                 }
+
+                // Hides the keyboard after submitting
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+                imm.hideSoftInputFromWindow(binding.searchView.windowToken, 0)
+
+                binding.searchView.clearFocus() // removes focus from the search view
                 return true
             }
 
@@ -68,9 +95,9 @@ class MainActivity : AppCompatActivity() {
         ).enqueue(object : Callback<WeatherApp> {
             override fun onResponse(call: Call<WeatherApp>, response: Response<WeatherApp>) {
                 binding.progressBar.visibility = View.GONE
+                swipeRefreshLayout.isRefreshing = false
                 val data = response.body()
                 if (response.isSuccessful && data != null) {
-                    // Set data
                     binding.temp.text = "${data.main.temp} °C"
                     binding.weather.text = data.weather.firstOrNull()?.main ?: "N/A"
                     binding.maxTemp.text = "Max : ${data.main.temp_max} °C"
@@ -86,14 +113,16 @@ class MainActivity : AppCompatActivity() {
                     binding.cityName.text = cityName
 
                     changeImagesAccordingToWeatherCondition(data.weather.firstOrNull()?.main ?: "")
-
-                    // Apply animations
                     applyViewAnimations()
+                }else {
+                    swipeRefreshLayout.isRefreshing = false
+                    Toast.makeText(this@MainActivity, "Enter a valid input", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<WeatherApp>, t: Throwable) {
                 binding.progressBar.visibility = View.GONE
+                swipeRefreshLayout.isRefreshing = false
                 Log.e("WeatherAPI", "Error: ${t.message}", t)
             }
         })
